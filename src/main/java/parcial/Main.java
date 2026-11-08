@@ -17,9 +17,9 @@ public class Main {
         boolean continuar = true;
 
         while (continuar) {
-            System.out.println("\n===================================");
+            
             System.out.println(" PARCIAL 2 - ESTRUCTURA DE DATOS");
-            System.out.println("===================================");
+            
             System.out.println("1. Ejercicio 1 - Retiro de cajas");
             System.out.println("2. Ejercicio 2");
             System.out.println("3. Ejercicio 3");
@@ -55,9 +55,9 @@ public class Main {
         boolean continuar = true;
 
         while (continuar) {
-            System.out.println("\n===================================");
+            
             System.out.println(" EJERCICIO 1 - RETIRO DE CAJAS");
-            System.out.println("===================================");
+            
             System.out.println("1. Registrar caja");
             System.out.println("2. Retirar caja");
             System.out.println("3. Mostrar pila");
@@ -94,7 +94,7 @@ public class Main {
     }
 
     private static void registrarCaja(Pila<Caja> cajas) {
-        System.out.println("\n--- Registrar caja ---");
+        System.out.println("\n Registrar caja ");
         String codigo = leerTexto("Ingrese el codigo: ");
 
         if (buscarCaja(cajas, codigo) != null) {
@@ -203,7 +203,6 @@ public class Main {
         System.out.println("B = " + b);
         System.out.println("C = " + c);
         System.out.println("D = " + d);
-        System.out.println("La conversion/evaluacion de una expresion no se agrega porque el enunciado compartido no especifica la expresion.");
     }
 
     private static void restaurarPila(Pila<Caja> destino, Pila<Caja> auxiliar) {
