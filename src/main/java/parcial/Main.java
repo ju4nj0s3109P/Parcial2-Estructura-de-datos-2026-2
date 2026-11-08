@@ -5,6 +5,7 @@ import java.util.Scanner;
 import parcial.ejercicio1.Caja;
 import parcial.ejercicio1.Pila;
 import parcial.ejercicio1.RetiroCajas;
+import parcial.ejercicio2.ObtenerSegmento;
 
 /**
  * Menu interactivo para probar los ejercicios del parcial.
@@ -17,11 +18,9 @@ public class Main {
         boolean continuar = true;
 
         while (continuar) {
-            
-            System.out.println(" PARCIAL 2 - ESTRUCTURA DE DATOS");
-            
+            System.out.println("\n PARCIAL 2 - ESTRUCTURA DE DATOS");
             System.out.println("1. Ejercicio 1 - Retiro de cajas");
-            System.out.println("2. Ejercicio 2");
+            System.out.println("2. Ejercicio 2 - Segmento del historial");
             System.out.println("3. Ejercicio 3");
             System.out.println("0. Salir");
 
@@ -32,7 +31,7 @@ public class Main {
                     menuEjercicio1();
                     break;
                 case 2:
-                    mostrarEjercicioPendiente(2);
+                    menuEjercicio2();
                     break;
                 case 3:
                     mostrarEjercicioPendiente(3);
@@ -55,9 +54,7 @@ public class Main {
         boolean continuar = true;
 
         while (continuar) {
-            
-            System.out.println(" EJERCICIO 1 - RETIRO DE CAJAS");
-            
+            System.out.println("\n EJERCICIO 1 - RETIRO DE CAJAS");
             System.out.println("1. Registrar caja");
             System.out.println("2. Retirar caja");
             System.out.println("3. Mostrar pila");
@@ -94,7 +91,7 @@ public class Main {
     }
 
     private static void registrarCaja(Pila<Caja> cajas) {
-        System.out.println("\n Registrar caja ");
+        System.out.println("\n--- Registrar caja ---");
         String codigo = leerTexto("Ingrese el codigo: ");
 
         if (buscarCaja(cajas, codigo) != null) {
@@ -175,13 +172,12 @@ public class Main {
             return;
         }
 
-        Pila<Caja> auxiliar = new Pila<>();
         Caja primera = cajas.desapilar();
         Caja segunda = cajas.desapilar();
         Caja tercera = cajas.desapilar();
         Caja cuarta = cajas.desapilar();
 
-        // Apilar en orden de extraccion permite restaurar la pila sin alterar su orden.
+        Pila<Caja> auxiliar = new Pila<>();
         auxiliar.apilar(primera);
         auxiliar.apilar(segunda);
         auxiliar.apilar(tercera);
@@ -205,7 +201,80 @@ public class Main {
         System.out.println("D = " + d);
     }
 
-    private static void restaurarPila(Pila<Caja> destino, Pila<Caja> auxiliar) {
+    private static void menuEjercicio2() {
+        Pila<String> historial = new Pila<>();
+        ObtenerSegmento servicio = new ObtenerSegmento();
+        boolean continuar = true;
+
+        while (continuar) {
+            System.out.println("\n EJERCICIO 2 - SEGMENTO DEL HISTORIAL");
+            System.out.println("1. Registrar accion");
+            System.out.println("2. Obtener segmento");
+            System.out.println("3. Mostrar historial");
+            System.out.println("0. Volver al menu principal");
+
+            int opcion = leerEntero("Seleccione una opcion: ");
+
+            switch (opcion) {
+                case 1:
+                    registrarAccion(historial);
+                    break;
+                case 2:
+                    obtenerSegmento(historial, servicio);
+                    break;
+                case 3:
+                    System.out.println("\nHistorial (cima a fondo):");
+                    mostrarPilaTexto(historial);
+                    break;
+                case 0:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opcion no valida. Intente nuevamente.");
+            }
+        }
+    }
+
+    private static void registrarAccion(Pila<String> historial) {
+        String accion = leerTexto("Ingrese el identificador de la accion: ");
+        historial.apilar(accion);
+        System.out.println("Accion " + accion + " registrada correctamente.");
+    }
+
+    private static void obtenerSegmento(Pila<String> historial, ObtenerSegmento servicio) {
+        int inicio = leerEntero("Ingrese la posicion inicial (desde la cima): ");
+        int fin = leerEntero("Ingrese la posicion final (desde la cima): ");
+
+        Pila<String> segmento = servicio.obtenerSegmento(historial, inicio, fin);
+
+        if (segmento.estaVacia()) {
+            System.out.println("Los indices no son validos. Se retorna una pila vacia.");
+        } else {
+            System.out.println("\nSegmento obtenido (cima a fondo):");
+            mostrarPilaTexto(segmento);
+        }
+
+        System.out.println("\nHistorial original (cima a fondo), sin cambios:");
+        mostrarPilaTexto(historial);
+    }
+
+    private static void mostrarPilaTexto(Pila<String> pila) {
+        if (pila.estaVacia()) {
+            System.out.println("La pila esta vacia.");
+            return;
+        }
+
+        Pila<String> auxiliar = new Pila<>();
+        while (!pila.estaVacia()) {
+            String accion = pila.desapilar();
+            System.out.println(accion);
+            auxiliar.apilar(accion);
+        }
+
+        restaurarPila(pila, auxiliar);
+    }
+
+    private static <T> void restaurarPila(Pila<T> destino, Pila<T> auxiliar) {
         while (!auxiliar.estaVacia()) {
             destino.apilar(auxiliar.desapilar());
         }
