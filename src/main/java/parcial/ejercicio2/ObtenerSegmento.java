@@ -32,18 +32,9 @@ public class ObtenerSegmento {
             historial.apilar(resultado.desapilar());
         }
 
-        // El auxiliar contiene el segmento en orden inverso; se invierte
-        // para que la accion de inicio quede en la cima.
+        // Se conserva el orden del segmento para que inicio quede en la cima.
         while (!auxiliar.estaVacia()) {
             resultado.apilar(auxiliar.desapilar());
-        }
-
-        Pila<String> inversion = new Pila<>();
-        while (!resultado.estaVacia()) {
-            inversion.apilar(resultado.desapilar());
-        }
-        while (!inversion.estaVacia()) {
-            resultado.apilar(inversion.desapilar());
         }
 
         return resultado;
