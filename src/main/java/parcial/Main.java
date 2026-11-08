@@ -181,10 +181,11 @@ public class Main {
         Caja tercera = cajas.desapilar();
         Caja cuarta = cajas.desapilar();
 
-        auxiliar.apilar(cuarta);
-        auxiliar.apilar(tercera);
-        auxiliar.apilar(segunda);
+        // Apilar en orden de extraccion permite restaurar la pila sin alterar su orden.
         auxiliar.apilar(primera);
+        auxiliar.apilar(segunda);
+        auxiliar.apilar(tercera);
+        auxiliar.apilar(cuarta);
         restaurarPila(cajas, auxiliar);
 
         double a = primera.getValor();
