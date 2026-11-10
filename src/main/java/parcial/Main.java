@@ -232,7 +232,7 @@ public class Main {
             return null;
         }
 
-        double b = segunda.getValor() / a;
+        double b = (double) segunda.getValor() / a;
         double c = tercera.getValor() + a;
         double d = (cuarta.getValor() + c) * a;
         return new double[] { a, b, c, d };
